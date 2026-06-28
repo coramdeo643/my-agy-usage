@@ -11,7 +11,7 @@ export const QUOTA_THRESHOLDS = {
 
 export const TIMING = {
     
-    DEFAULT_REFRESH_INTERVAL_MS: 120000,
+    DEFAULT_REFRESH_INTERVAL_MS: 20000,
     
     PROCESS_SCAN_RETRY_MS: 100,
     
@@ -45,6 +45,7 @@ export const PROCESS_NAMES = {
 
 export const CONFIG_KEYS = {
     REFRESH_INTERVAL: 'refreshInterval',
+    NOTIFY_ON_RESET: 'notifyOnReset',
     SHOW_PROMPT_CREDITS: 'showPromptCredits',
     PINNED_MODELS: 'pinnedModels',
     MODEL_ORDER: 'modelOrder',

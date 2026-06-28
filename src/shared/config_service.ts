@@ -10,7 +10,13 @@ class ConfigService {
             CONFIG_KEYS.REFRESH_INTERVAL,
             TIMING.DEFAULT_REFRESH_INTERVAL_MS / 1000,
         );
-        return seconds * 1000;
+        const clampedSeconds = Math.max(20, Math.min(3600, seconds ?? 20));
+        return clampedSeconds * 1000;
+    }
+
+    getNotifyOnReset(): boolean {
+        const config = vscode.workspace.getConfiguration(this.configSection);
+        return config.get<boolean>(CONFIG_KEYS.NOTIFY_ON_RESET, true);
     }
 }
 

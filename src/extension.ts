@@ -39,14 +39,6 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         await bootSystems();
     }));
 
-    context.subscriptions.push(vscode.commands.registerCommand('myAgyUsage.setPinnedModel', async (modelName: string) => {
-        if (!modelName) return;
-        logger.info(`Pinned model set to: ${modelName}`);
-        await context.globalState.update('pinnedModel', modelName);
-        // Pinning is display-only — re-render the status bar instantly, no re-fetch needed.
-        statusBar.repaint();
-    }));
-
     context.subscriptions.push(
         reactor.onSnapshotChange((snapshot) => {
             statusBar.update(snapshot);
