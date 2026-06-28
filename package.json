@@ -2,9 +2,9 @@
   "name": "my-agy-usage",
   "displayName": "My Antigravity Usage",
   "description": "A lightweight, status bar only quota monitor for Antigravity AI.",
-  "version": "1.0.1",
+  "version": "1.0.10",
   "publisher": "devcoramdeo",
-  "icon": "dev.coramdeo_profile.png",
+  "icon": "logo.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/coramdeo643/my-agy-usage.git"
@@ -39,6 +39,11 @@
         "command": "myAgyUsage.refresh",
         "title": "Refresh Quota Data",
         "category": "Antigravity Lite"
+      },
+      {
+        "command": "myAgyUsage.openSettings",
+        "title": "Open Extension Settings",
+        "category": "Antigravity Lite"
       }
     ],
     "keybindings": [
@@ -53,10 +58,348 @@
       "properties": {
         "myAgyUsage.refreshInterval": {
           "type": "number",
-          "default": 120,
-          "minimum": 10,
+          "default": 20,
+          "minimum": 20,
           "maximum": 3600,
-          "description": "Interval in seconds to refresh quota data (10-3600)."
+          "description": "Interval in seconds to refresh quota data (20-3600)."
+        },
+        "myAgyUsage.notifyOnReset": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show system notification when model quota resets or refreshes."
+        },
+        "myAgyUsage.statusBarModel": {
+          "type": "string",
+          "enum": [
+            "all",
+            "gemini",
+            "claudeGpt"
+          ],
+          "enumDescriptions": [
+            "Display all models (Gemini, Claude & GPT)",
+            "Display Gemini models only",
+            "Display Claude & GPT models only"
+          ],
+          "default": "all",
+          "description": "Select which AI models to display on the status bar."
+        },
+        "myAgyUsage.statusBarMetric": {
+          "type": "string",
+          "enum": [
+            "all",
+            "percentOnly",
+            "hourlyWeeklyOnly"
+          ],
+          "enumDescriptions": [
+            "Display both percent and reset countdown for all windows",
+            "Display remaining percentages only (hide countdowns)",
+            "Display only the prevailing window metric (hourly 5-hour limit or weekly limit when depleting)"
+          ],
+          "default": "all",
+          "description": "Select which quota metrics to display on the status bar."
+        }
+      }
+    },
+    "icons": {
+      "myagy-gemini": {
+        "description": "Official Monochrome Gemini Logo",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-0": {
+        "description": "Ring Chart 0%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-5": {
+        "description": "Ring Chart 5%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-10": {
+        "description": "Ring Chart 10%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-15": {
+        "description": "Ring Chart 15%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-20": {
+        "description": "Ring Chart 20%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-25": {
+        "description": "Ring Chart 25%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-30": {
+        "description": "Ring Chart 30%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-35": {
+        "description": "Ring Chart 35%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-40": {
+        "description": "Ring Chart 40%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-45": {
+        "description": "Ring Chart 45%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-50": {
+        "description": "Ring Chart 50%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-55": {
+        "description": "Ring Chart 55%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-60": {
+        "description": "Ring Chart 60%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-65": {
+        "description": "Ring Chart 65%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-70": {
+        "description": "Ring Chart 70%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-75": {
+        "description": "Ring Chart 75%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-80": {
+        "description": "Ring Chart 80%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-85": {
+        "description": "Ring Chart 85%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-90": {
+        "description": "Ring Chart 90%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-95": {
+        "description": "Ring Chart 95%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-ring-100": {
+        "description": "Ring Chart 100%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-0": {
+        "description": "Pie Chart 0%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-5": {
+        "description": "Pie Chart 5%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-10": {
+        "description": "Pie Chart 10%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-15": {
+        "description": "Pie Chart 15%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-20": {
+        "description": "Pie Chart 20%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-25": {
+        "description": "Pie Chart 25%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-30": {
+        "description": "Pie Chart 30%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-35": {
+        "description": "Pie Chart 35%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-40": {
+        "description": "Pie Chart 40%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-45": {
+        "description": "Pie Chart 45%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-50": {
+        "description": "Pie Chart 50%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-55": {
+        "description": "Pie Chart 55%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-60": {
+        "description": "Pie Chart 60%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-65": {
+        "description": "Pie Chart 65%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-70": {
+        "description": "Pie Chart 70%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-75": {
+        "description": "Pie Chart 75%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-80": {
+        "description": "Pie Chart 80%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-85": {
+        "description": "Pie Chart 85%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-90": {
+        "description": "Pie Chart 90%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-95": {
+        "description": "Pie Chart 95%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
+        }
+      },
+      "myagy-pie-100": {
+        "description": "Pie Chart 100%",
+        "default": {
+          "fontPath": "./resources/myicons-v8.woff",
+          "fontCharacter": ""
         }
       }
     }
@@ -73,8 +416,14 @@
     "@types/vscode": "^1.90.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
+    "@vscode/vsce": "^3.9.2",
     "esbuild": "^0.20.2",
     "eslint": "^8.57.0",
+    "svg2ttf": "^6.1.0",
+    "ttf2woff": "^3.0.0",
     "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "puppeteer": "^25.2.1"
   }
 }

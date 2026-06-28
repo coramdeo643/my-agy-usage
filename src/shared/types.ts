@@ -40,6 +40,9 @@ export interface ModelQuotaInfo {
     tagTitle?: string;
     
     supportedMimeTypes?: Record<string, boolean>;
+
+    /** Whether this entry represents a sprint (hourly) or weekly quota window. */
+    quotaWindow?: 'sprint' | 'weekly';
 }
 
 export interface QuotaGroup {
@@ -61,6 +64,45 @@ export interface QuotaGroup {
     isExhausted: boolean;
 }
 
+/**
+ * Aggregated quota summary for a model family (e.g. "Gemini" or "Claude/GPT").
+ * Contains both the sprint (short-term / hourly) and weekly (long-term) metrics.
+ */
+export interface FamilyQuotaSummary {
+    /** Display name, e.g. "Gemini" or "Claude/GPT" */
+    familyName: string;
+    /** Sprint remaining percentage (0-100) */
+    sprintPct: number;
+    /** Human-readable sprint countdown, e.g. "1h32m" */
+    sprintCountdown: string;
+    /** Weekly remaining percentage (0-100) */
+    weeklyPct: number;
+    /** Human-readable weekly countdown, e.g. "4d15h" */
+    weeklyCountdown: string;
+}
+
+export interface ServerQuotaBucket {
+    bucketId: string;
+    displayName: string;
+    description?: string;
+    window?: 'weekly' | '5h' | string;
+    remainingFraction?: number;
+    resetTime?: string;
+}
+
+export interface ServerQuotaGroup {
+    displayName: string;
+    description?: string;
+    buckets: ServerQuotaBucket[];
+}
+
+export interface ServerQuotaSummaryResponse {
+    response?: {
+        groups?: ServerQuotaGroup[];
+        description?: string;
+    };
+}
+
 export interface QuotaSnapshot {
     
     timestamp: Date;
@@ -76,6 +118,12 @@ export interface QuotaSnapshot {
     allModels?: ModelQuotaInfo[];
     
     groups?: QuotaGroup[];
+
+    /** Aggregated per-family sprint + weekly summaries for status bar display. */
+    familySummaries?: FamilyQuotaSummary[];
+
+    /** Native server quota groups directly from RetrieveUserQuotaSummary */
+    serverQuotaGroups?: ServerQuotaGroup[];
     
     isConnected: boolean;
     
