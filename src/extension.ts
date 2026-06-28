@@ -39,6 +39,16 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         await bootSystems();
     }));
 
+    context.subscriptions.push(vscode.commands.registerCommand('myAgyUsage.openSettings', () => {
+        vscode.commands.executeCommand('workbench.action.openSettings', 'myAgyUsage');
+    }));
+
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
+        if (e.affectsConfiguration('myAgyUsage')) {
+            statusBar.repaint();
+        }
+    }));
+
     context.subscriptions.push(
         reactor.onSnapshotChange((snapshot) => {
             statusBar.update(snapshot);

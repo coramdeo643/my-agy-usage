@@ -39,6 +39,11 @@
         "command": "myAgyUsage.refresh",
         "title": "Refresh Quota Data",
         "category": "Antigravity Lite"
+      },
+      {
+        "command": "myAgyUsage.openSettings",
+        "title": "Open Extension Settings",
+        "category": "Antigravity Lite"
       }
     ],
     "keybindings": [
@@ -62,6 +67,36 @@
           "type": "boolean",
           "default": true,
           "description": "Show system notification when model quota resets or refreshes."
+        },
+        "myAgyUsage.statusBarModel": {
+          "type": "string",
+          "enum": [
+            "all",
+            "gemini",
+            "claudeGpt"
+          ],
+          "enumDescriptions": [
+            "Display all models (Gemini, Claude & GPT)",
+            "Display Gemini models only",
+            "Display Claude & GPT models only"
+          ],
+          "default": "all",
+          "description": "Select which AI models to display on the status bar."
+        },
+        "myAgyUsage.statusBarMetric": {
+          "type": "string",
+          "enum": [
+            "all",
+            "percentOnly",
+            "hourlyWeeklyOnly"
+          ],
+          "enumDescriptions": [
+            "Display both percent and reset countdown for all windows",
+            "Display remaining percentages only (hide countdowns)",
+            "Display only the prevailing window metric (hourly 5-hour limit or weekly limit when depleting)"
+          ],
+          "default": "all",
+          "description": "Select which quota metrics to display on the status bar."
         }
       }
     },

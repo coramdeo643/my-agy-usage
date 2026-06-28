@@ -261,7 +261,21 @@ export class StatusBarController {
     }
 
     private formatServerQuotaGroupsText(groups: any[]): string {
-        const parts = groups.map(g => {
+        const selectedModel = configService.getStatusBarModel();
+        const selectedMetric = configService.getStatusBarMetric();
+
+        let filteredGroups = groups;
+        if (selectedModel === 'gemini') {
+            filteredGroups = groups.filter(g => (g.displayName || '').includes('Gemini'));
+        } else if (selectedModel === 'claudeGpt') {
+            filteredGroups = groups.filter(g => (g.displayName || '').includes('Claude') || (g.displayName || '').includes('GPT'));
+        }
+
+        if (filteredGroups.length === 0) {
+            filteredGroups = groups;
+        }
+
+        const parts = filteredGroups.map(g => {
             let icon = '$(robot)';
             let familyName = g.displayName || '';
             if (familyName.includes('Gemini')) {
@@ -284,7 +298,20 @@ export class StatusBarController {
             const weeklyIcon = this.getFontChartIcon('pie', weeklyFraction);
             const weeklyCountdown = weeklyBucket ? this.formatCountdown(weeklyBucket.resetTime) : '--';
 
-            return `${icon} ${sprintIcon} ${sprintPctNum}% (${sprintCountdown}), ${weeklyIcon} ${weeklyPctNum}% (${weeklyCountdown})`;
+            if (selectedMetric === 'percentOnly') {
+                return `${icon} ${sprintIcon} ${sprintPctNum}%, ${weeklyIcon} ${weeklyPctNum}%`;
+            } else if (selectedMetric === 'hourlyWeeklyOnly') {
+                const isWeeklyPrevailing = (weeklyFraction !== undefined && sprintFraction !== undefined)
+                    ? (weeklyFraction < sprintFraction)
+                    : false;
+                if (isWeeklyPrevailing) {
+                    return `${icon} ${weeklyIcon} ${weeklyPctNum}% (${weeklyCountdown})`;
+                } else {
+                    return `${icon} ${sprintIcon} ${sprintPctNum}% (${sprintCountdown})`;
+                }
+            } else {
+                return `${icon} ${sprintIcon} ${sprintPctNum}% (${sprintCountdown}), ${weeklyIcon} ${weeklyPctNum}% (${weeklyCountdown})`;
+            }
         });
         return parts.join(' | ');
     }
@@ -302,9 +329,9 @@ export class StatusBarController {
             if (g.displayName.includes('Gemini')) {
                 const geminiSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 2C12 7.52285 16.4771 12 22 12C16.4771 12 12 16.4771 12 22C12 16.4771 7.52285 12 2 12C7.52285 12 12 7.52285 12 2Z"/></svg>`;
                 const geminiDataUri = 'data:image/svg+xml;base64,' + Buffer.from(geminiSvg).toString('base64');
-                tooltip.appendMarkdown(`<img src="${geminiDataUri}" width="14" height="14" /> **${title}**\n\n`);
+                tooltip.appendMarkdown(`<span style="font-weight: normal; font-style: normal; display: inline-block;"><img src="${geminiDataUri}" width="14" height="14" /></span> **${title}**\n\n`);
             } else {
-                tooltip.appendMarkdown(`$(robot) **${title}**\n\n`);
+                tooltip.appendMarkdown(`<span style="font-weight: normal; font-style: normal; display: inline-block;">$(robot)</span> **${title}**\n\n`);
             }
 
             const sortedBuckets = [...(g.buckets || [])].sort((a, b) => {
@@ -336,14 +363,39 @@ export class StatusBarController {
             tooltip.appendMarkdown('---\n\n');
         }
 
-        tooltip.appendMarkdown(`*Updated ${snapshot.timestamp.toLocaleTimeString()} · Click to refresh*`);
+        this.appendTooltipFooter(tooltip, snapshot.timestamp);
         return tooltip;
     }
 
     private formatStatusBarText(summaries: FamilyQuotaSummary[]): string {
-        const parts = summaries.map(s =>
-            `${s.familyName}: ${s.sprintPct}% (${s.sprintCountdown}), $(pie-chart) ${s.weeklyPct}% (${s.weeklyCountdown})`
-        );
+        const selectedModel = configService.getStatusBarModel();
+        const selectedMetric = configService.getStatusBarMetric();
+
+        let filteredSummaries = summaries;
+        if (selectedModel === 'gemini') {
+            filteredSummaries = summaries.filter(s => s.familyName.includes('Gemini'));
+        } else if (selectedModel === 'claudeGpt') {
+            filteredSummaries = summaries.filter(s => s.familyName.includes('Claude') || s.familyName.includes('GPT'));
+        }
+
+        if (filteredSummaries.length === 0) {
+            filteredSummaries = summaries;
+        }
+
+        const parts = filteredSummaries.map(s => {
+            if (selectedMetric === 'percentOnly') {
+                return `${s.familyName}: ${s.sprintPct}%, $(pie-chart) ${s.weeklyPct}%`;
+            } else if (selectedMetric === 'hourlyWeeklyOnly') {
+                const isWeeklyPrevailing = s.weeklyPct < s.sprintPct;
+                if (isWeeklyPrevailing) {
+                    return `${s.familyName}: $(pie-chart) ${s.weeklyPct}% (${s.weeklyCountdown})`;
+                } else {
+                    return `${s.familyName}: ${s.sprintPct}% (${s.sprintCountdown})`;
+                }
+            } else {
+                return `${s.familyName}: ${s.sprintPct}% (${s.sprintCountdown}), $(pie-chart) ${s.weeklyPct}% (${s.weeklyCountdown})`;
+            }
+        });
         return parts.join(' | ');
     }
 
@@ -366,7 +418,12 @@ export class StatusBarController {
             tooltip.appendMarkdown('No quota data available\n\n');
         }
 
-        tooltip.appendMarkdown(`*Updated ${snapshot.timestamp.toLocaleTimeString()} · Click to refresh*`);
+        this.appendTooltipFooter(tooltip, snapshot.timestamp);
         return tooltip;
+    }
+
+    private appendTooltipFooter(tooltip: vscode.MarkdownString, timestamp: Date): void {
+        const timeStr = timestamp.toLocaleTimeString();
+        tooltip.appendMarkdown(`*Updated ${timeStr} · Click to refresh* &nbsp;&nbsp;&nbsp;&nbsp;[$(settings) Settings](command:myAgyUsage.openSettings "Open Extension Settings")`);
     }
 }

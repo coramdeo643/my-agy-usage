@@ -17,7 +17,8 @@
 ## ✨ 주요 기능
 
 - **미니멀리즘 상태 표시줄 (Status Bar)**: 길고 복잡한 모델명 대신 직관적인 커스텀 폰트 차트 아이콘(링 및 파이 차트)과 남은 퍼센트(%), 남은 시간 카운트다운을 상태 표시줄에 표시하여 작업 공간을 방해하지 않습니다.
-- **깔끔한 툴팁 (Rich Tooltip)**: 상태 표시줄에 마우스를 올리면 "Gemini"와 "Claude/GPT" 모델 패밀리별 할당량과 정확한 리셋 시각을 한눈에 확인할 수 있습니다.
+- **맞춤형 상태 표시 줄 필터**: 상태 표시줄에 어떤 AI 모델(`Gemini`, `Claude & GPT`, `All`)과 어떤 지표(`Percent Only`, 주요 제한 지표인 `Hourly/Weekly Only`, `All`)를 표시할지 드롭다운으로 선택할 수 있습니다.
+- **깔끔한 툴팁 & 빠른 설정 버튼**: 상태 표시줄에 마우스를 올리면 모델별 할당량과 정확한 리셋 시각을 확인할 수 있으며, 툴팁 우측 하단의 버튼을 통해 확장 프로그램 설정에 즉시 접근할 수 있습니다.
 - **다채널 리셋 알림 & 사운드**: 할당량이 복구/초과 초기화될 때 3가지 채널로 즉시 알림을 제공합니다.
   1. 🖥️ **OS 데스크톱 시스템 알림**: Windows Toast 등 OS 기본 알림 배너.
   2. 💬 **인앱 토스트 알림**: IDE 우측 하단의 알림 팝업.
@@ -45,12 +46,15 @@
 |---|---|---|---|
 | `myAgyUsage.refreshInterval` | `20` | `20-3600` (초) | 로컬 서버로부터 사용량 데이터를 갱신하는 주기(초 단위). |
 | `myAgyUsage.notifyOnReset` | `true` | `boolean` | 할당량 리셋 시 OS 시스템 알림, 인앱 토스트 및 효과음 재생 여부. |
+| `myAgyUsage.statusBarModel` | `"all"` | `"all"`, `"gemini"`, `"claudeGpt"` | 상태 표시줄에 표시할 AI 모델 필터 선택. |
+| `myAgyUsage.statusBarMetric` | `"all"` | `"all"`, `"percentOnly"`, `"hourlyWeeklyOnly"` | 상태 표시줄 지표 형식 선택 (전체, 퍼센트 전용, 시간/주간 우세 지표). |
 
 ## ⌨️ 명령어 (Commands)
 
 | 명령어 | 단축키 | 설명 |
 |---|---|---|
 | `Antigravity Lite: Refresh Quota Data` | `Ctrl/Cmd+Shift+R` | 사용량 데이터를 즉시 새로고침합니다 |
+| `Antigravity Lite: Open Extension Settings` | — | 확장 프로그램 설정 화면을 바로 엽니다 |
 
 ## 🚀 설치 방법
 

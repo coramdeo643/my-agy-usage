@@ -17,7 +17,8 @@
 ## ✨ Key Features
 
 - **Minimalist Status Bar Integration**: Displays intuitive chart icons (ring and pie charts) with exact percentage and countdown timers right in your status bar without cluttering your workspace.
-- **Rich Hover Tooltip**: Hover over the status bar item to view a beautifully categorized breakdown of "Gemini" and "Claude/GPT" quotas with exact reset timestamps and countdowns.
+- **Customizable Display Filters**: Choose exactly which AI models (`Gemini`, `Claude & GPT`, or `All`) and metrics (`Percent Only`, `Hourly/Weekly Only` prevailing metric, or `All`) appear on your status bar.
+- **Rich Hover Tooltip with Quick Settings Access**: Hover over the status bar item to view a beautifully categorized breakdown of quotas with exact reset timestamps, plus quick one-click access to extension settings at the lower-right.
 - **Multi-Channel Quota Reset Alerts**: When your quota refreshes, get notified immediately across 3 channels:
   1. 🖥️ **OS Desktop Notifications**: Native system toast notification banner.
   2. 💬 **In-App Toast**: IDE popups in the bottom-right corner.
@@ -45,12 +46,15 @@ Optimized with `esbuild`, the entire extension is packed into a tiny ~30 KB Java
 |---|---|---|---|
 | `myAgyUsage.refreshInterval` | `20` | `20-3600` (seconds) | Interval in seconds to refresh quota data from local server. |
 | `myAgyUsage.notifyOnReset` | `true` | `boolean` | Show system notifications, in-app toasts, and play sound effect on quota refresh. |
+| `myAgyUsage.statusBarModel` | `"all"` | `"all"`, `"gemini"`, `"claudeGpt"` | Filter which AI models to display on the status bar. |
+| `myAgyUsage.statusBarMetric` | `"all"` | `"all"`, `"percentOnly"`, `"hourlyWeeklyOnly"` | Select metric format (All, Percent only, or prevailing constraint metric). |
 
 ## ⌨️ Commands
 
 | Command | Keybinding | Description |
 |---|---|---|
 | `Antigravity Lite: Refresh Quota Data` | `Ctrl/Cmd+Shift+R` | Refresh quota data immediately |
+| `Antigravity Lite: Open Extension Settings` | — | Open extension settings directly |
 
 ## 🚀 How to Install
 
