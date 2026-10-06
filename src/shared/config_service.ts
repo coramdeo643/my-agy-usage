@@ -23,11 +23,6 @@ class ConfigService {
         const config = vscode.workspace.getConfiguration(this.configSection);
         return config.get<'all' | 'gemini' | 'claudeGpt'>(CONFIG_KEYS.STATUS_BAR_MODEL, 'all');
     }
-
-    getStatusBarMetric(): 'all' | 'percentOnly' | 'hourlyWeeklyOnly' {
-        const config = vscode.workspace.getConfiguration(this.configSection);
-        return config.get<'all' | 'percentOnly' | 'hourlyWeeklyOnly'>(CONFIG_KEYS.STATUS_BAR_METRIC, 'all');
-    }
 }
 
 export const configService = new ConfigService();

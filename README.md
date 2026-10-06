@@ -1,4 +1,4 @@
-*Read this in [한국어](README-ko.md)*
+*Read this in [한국어](README-ko.md) | [中文](README-zh.md)*
 
 # My Antigravity Usage (Antigravity Lite)
 
@@ -16,13 +16,12 @@
 
 ## ✨ Key Features
 
-- **Minimalist Status Bar Integration**: Displays intuitive chart icons (ring and pie charts) with exact percentage and countdown timers right in your status bar without cluttering your workspace.
-- **Customizable Display Filters**: Choose exactly which AI models (`Gemini`, `Claude & GPT`, or `All`) and metrics (`Percent Only`, `Hourly/Weekly Only` prevailing metric, or `All`) appear on your status bar.
-- **Rich Hover Tooltip with Quick Settings Access**: Hover over the status bar item to view a beautifully categorized breakdown of quotas with exact reset timestamps, plus quick one-click access to extension settings at the lower-right.
-- **Multi-Channel Quota Reset Alerts**: When your quota refreshes, get notified immediately across 3 channels:
-  1. 🖥️ **OS Desktop Notifications**: Native system toast notification banner.
-  2. 💬 **In-App Toast**: IDE popups in the bottom-right corner.
-  3. 🔊 **Audio Chimes**: Antigravity IDE built-in task completion sound effect.
+- **Minimalist Status Bar Integration**: Displays an intuitive ring chart icon with the exact remaining percentage right in your status bar without cluttering your workspace.
+- **Customizable Display Filters**: Choose exactly which AI models (`Gemini`, `Claude & GPT`, or `All`) appear on your status bar.
+- **Rich Hover Tooltip**: Hover over the status bar item to view a beautifully categorized breakdown of quotas. It shows the 5-hour ring and weekly pie charts side-by-side with exact remaining percentages and reset countdowns.
+- **Quota Reset Alerts**: When your quota refreshes, get notified immediately across 2 channels:
+  1. 💬 **In-App Toast**: IDE popups in the bottom-right corner.
+  2. 🔊 **Audio Chimes**: Antigravity IDE built-in task completion sound effect.
 
 ## 🔒 Privacy First (100% Local)
 
@@ -45,9 +44,8 @@ Optimized with `esbuild`, the entire extension is packed into a tiny ~30 KB Java
 | Setting | Default | Range / Type | Description |
 |---|---|---|---|
 | `myAgyUsage.refreshInterval` | `20` | `20-3600` (seconds) | Interval in seconds to refresh quota data from local server. |
-| `myAgyUsage.notifyOnReset` | `true` | `boolean` | Show system notifications, in-app toasts, and play sound effect on quota refresh. |
+| `myAgyUsage.notifyOnReset` | `true` | `boolean` | Show in-app toasts and play sound effect on quota refresh. |
 | `myAgyUsage.statusBarModel` | `"all"` | `"all"`, `"gemini"`, `"claudeGpt"` | Filter which AI models to display on the status bar. |
-| `myAgyUsage.statusBarMetric` | `"all"` | `"all"`, `"percentOnly"`, `"hourlyWeeklyOnly"` | Select metric format (All, Percent only, or prevailing constraint metric). |
 
 ## ⌨️ Commands
 

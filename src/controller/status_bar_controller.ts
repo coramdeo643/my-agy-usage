@@ -198,7 +198,7 @@ export class StatusBarController {
             const sprintPctNum = sprintFraction !== undefined ? Math.floor(sprintFraction * 100) : 100;
             const sprintIcon = this.getFontChartIcon('ring', sprintFraction);
 
-            return `${initial} ${sprintPctNum}% ${sprintIcon}`;
+            return `${initial} ${sprintIcon} ${sprintPctNum}%`;
         });
         return parts.join(' | ');
     }
@@ -254,7 +254,7 @@ export class StatusBarController {
         const parts = filteredSummaries.map(s => {
             const initial = s.familyName.includes('Gemini') ? 'G' : 'C';
             const sprintIcon = this.getFontChartIcon('ring', s.sprintPct / 100);
-            return `${initial} ${s.sprintPct}% ${sprintIcon}`;
+            return `${initial} ${sprintIcon} ${s.sprintPct}%`;
         });
         return parts.join(' | ');
     }

@@ -82,21 +82,6 @@
           ],
           "default": "all",
           "description": "Select which AI models to display on the status bar."
-        },
-        "myAgyUsage.statusBarMetric": {
-          "type": "string",
-          "enum": [
-            "all",
-            "percentOnly",
-            "hourlyWeeklyOnly"
-          ],
-          "enumDescriptions": [
-            "Display both percent and reset countdown for all windows",
-            "Display remaining percentages only (hide countdowns)",
-            "Display only the prevailing window metric (hourly 5-hour limit or weekly limit when depleting)"
-          ],
-          "default": "all",
-          "description": "Select which quota metrics to display on the status bar."
         }
       }
     },

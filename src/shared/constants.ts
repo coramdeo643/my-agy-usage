@@ -47,7 +47,6 @@ export const CONFIG_KEYS = {
     REFRESH_INTERVAL: 'refreshInterval',
     NOTIFY_ON_RESET: 'notifyOnReset',
     STATUS_BAR_MODEL: 'statusBarModel',
-    STATUS_BAR_METRIC: 'statusBarMetric',
     SHOW_PROMPT_CREDITS: 'showPromptCredits',
     PINNED_MODELS: 'pinnedModels',
     MODEL_ORDER: 'modelOrder',
