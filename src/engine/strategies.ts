@@ -171,7 +171,7 @@ export class UnixStrategy implements PlatformStrategy {
                 logger.info(`[UnixStrategy] Port command available: ${cmd}`);
                 return;
             } catch {
-                
+                continue;
             }
         }
 

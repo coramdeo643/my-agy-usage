@@ -97,7 +97,7 @@ function resolveWslWindowsAppDataDir(): string {
     }
 }
 
-function resolveWslWindowsUserProfileDir(): string {
+export function resolveWslWindowsUserProfileDir(): string {
     if (cachedWslWindowsUserProfileDir !== undefined) {
         if (cachedWslWindowsUserProfileDir) {
             return cachedWslWindowsUserProfileDir;

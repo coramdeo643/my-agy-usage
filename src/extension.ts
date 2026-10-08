@@ -25,7 +25,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         setAntigravityUserDataDir(userDataDir);
         logger.info(`[Startup] Resolved user-data-dir: ${userDataDir}, remote=${vscode.env.remoteName ?? 'local'}`);
     } catch (err) {
-        logger.warn(`[Startup] Failed to resolve user-data-dir`);
+        logger.warn('[Startup] Failed to resolve user-data-dir');
     }
 
     hunter = new ProcessHunter();
@@ -39,18 +39,20 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         await bootSystems();
     }));
 
-    context.subscriptions.push(vscode.commands.registerCommand('myAgyUsage.setPinnedModel', async (modelName: string) => {
-        if (!modelName) return;
-        logger.info(`Pinned model set to: ${modelName}`);
-        await context.globalState.update('pinnedModel', modelName);
-        // Pinning is display-only — re-render the status bar instantly, no re-fetch needed.
-        statusBar.repaint();
+    context.subscriptions.push(vscode.commands.registerCommand('myAgyUsage.openSettings', () => {
+        vscode.commands.executeCommand('workbench.action.openSettings', 'myAgyUsage');
+    }));
+
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
+        if (e.affectsConfiguration('myAgyUsage')) {
+            statusBar.repaint();
+        }
     }));
 
     context.subscriptions.push(
         reactor.onSnapshotChange((snapshot) => {
             statusBar.update(snapshot);
-        })
+        }),
     );
 
     await bootSystems();
@@ -78,7 +80,7 @@ async function bootSystems(): Promise<void> {
                 setTimeout(bootSystems, AUTO_RETRY_DELAY_MS);
             } else {
                 autoRetryCount = 0;
-                statusBar.setError("Offline");
+                statusBar.setError('Offline');
             }
         }
     } catch (e) {
@@ -88,7 +90,7 @@ async function bootSystems(): Promise<void> {
             setTimeout(bootSystems, AUTO_RETRY_DELAY_MS);
         } else {
             autoRetryCount = 0;
-            statusBar.setError("Error connecting");
+            statusBar.setError('Error connecting');
         }
     }
 }
